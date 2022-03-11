@@ -1,0 +1,31 @@
+<%- include('includes/header') %>
+
+    <div class="container p-2 my-4">
+        <center><h4><u>Search Results</u></h4></center>
+        <br />
+        <% if (posts.length > 0) { %>
+            <% posts.forEach(function(post) { %>
+                <div class="card my-2">
+                    <div class="card-body">
+                        <h5 class="card-title"><%- post.title %></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            Published on <%- post.publishedOn.toDateString() %>
+                            <% if(post.isAnonymous === true) { %>
+                                <strong><i>anonymously</i></strong>
+                            <% } else { %>
+                                by <strong><i><%- post.author.username %></i></strong>
+                            <% } %>
+                        </h6>
+                        <span class="badge bg-info text-dark"><%- post.company %></span>
+                        <button class="btn btn-outline-light"><i class="fas fa-heart" style="color: red; font-size: 20px;"> <%- post.likes.length %></i></button>
+                        <br />
+                        <a href="/post/<%- post._id %>" class="card-link">Read</a>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <center><h6 class="display-4">No posts found!</h6></center>
+        <% } %>
+    </div>
+
+    <%- include('includes/footer') %>

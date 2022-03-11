@@ -1,0 +1,40 @@
+<%- include('includes/header') %>
+    <%- include('includes/flash') %>
+
+    <div class="container p-2">
+        <div class="container col-lg-8 mx-auto my-5">
+            <center>
+                <h1 class="display-2">Welcome to NoDoubt!</h1>
+                <p>One stop for your interview preparation</p>
+                <br />
+                <form class="d-flex col-lg-6" action="/search" method="GET">
+                    <input class="form-control me-2" type="search" name="q" id="q" placeholder="Search by company or role" aria-label="Search" required>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </center>
+        </div>
+
+        <% if (posts.length > 0) { %>
+            <% posts.forEach(function(post) { %>
+                <div class="card my-2">
+                    <div class="card-body">
+                        <h5 class="card-title"><%- post.title %></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            Published on <%- post.publishedOn.toDateString() %> 
+                            <% if(post.isAnonymous === true) { %>
+                                <strong><i>anonymously</i></strong>
+                            <% } else { %>
+                                by <strong><i><%- post.author.username %></i></strong>
+                            <% } %>
+                        </h6>
+                        <span class="badge bg-info text-dark"><%- post.company %></span>
+                        <button class="btn btn-outline-light"><i class="fas fa-heart" style="color: red; font-size: 20px;"> <%- post.likes.length %></i></button>
+                        <br />
+                        <a href="/post/<%- post._id %>" class="card-link">Read</a>
+                    </div>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+
+    <%- include('includes/footer') %>

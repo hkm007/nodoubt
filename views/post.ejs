@@ -1,0 +1,59 @@
+<%- include('includes/header') %>
+    <%- include('includes/flash') %>
+
+        <div class="container p-2 my-3">
+            <% if(post !== null) { %>
+                <div class="card my-2">
+                    <div class="card-body">
+                        <h2>
+                            <%- post.title %>
+                        </h2>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            Published on
+                            <%- post.publishedOn.toDateString() %>
+                            <% if(post.isAnonymous===true) { %>
+                                <strong><i>anonymously</i></strong>
+                            <% } else { %>
+                                by <strong><i>
+                                    <%- post.author.username %>
+                                </i></strong>
+                            <% } %> 
+                        </h6>
+
+                        <% if(user) { %>
+                            <% if(post.isLiked === true) { %>
+                                <form action="/post/unlike/<%- post._id %>" method="POST">
+                                    <span class="badge bg-info text-dark"><%- post.company %></span>
+                                    <button class="btn btn-outline-light" type="submit"><i class="fas fa-heart" style="color: red; font-size: 20px;"> <%- post.likes.length %></i></button>
+                                </form>
+                            <% } else { %>
+                                <form action="/post/like/<%- post._id %>" method="POST">
+                                    <span class="badge bg-info text-dark"><%- post.company %></span>
+                                    <button class="btn btn-outline-light" type="submit"><i class="far fa-heart" style="color: black; font-size: 20px;"> <%- post.likes.length %></i></button>
+                                </form>
+                            <% } %>
+                        <% } else { %>
+                            <span class="badge bg-info text-dark"><%- post.company %></span>
+                            <button class="btn btn-outline-light"><i class="fas fa-heart" style="color: red; font-size: 20px;"> <%- post.likes.length %></i></button>
+                        <% } %>
+
+                        <% if(user && post.author.username===user.username) { %>
+                            <div class="btn-group col-lg-1 my-2" role="group" aria-label="Basic example">
+                                <a class="btn btn-outline-secondary" href="/post/update/<%- post._id %>"><i class="fas fa-pencil-alt"></i></a>
+                                <div class="mx-1">
+                                    <form action="/post/delete/<%- post._id %>" method="post">
+                                        <button class="btn btn-outline-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        <% } %>
+                        <br />
+                        <pre style="font-family: 'Open Sans', sans-serif; font-size: 18px; color: black; white-space: pre-wrap; margin-bottom: 0rem;">
+                            <%- post.content %>
+                        </pre>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+
+        <%- include('includes/footer') %>

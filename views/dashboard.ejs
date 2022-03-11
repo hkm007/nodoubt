@@ -1,0 +1,55 @@
+<%- include('includes/header') %>
+
+<%- include('includes/flash') %>
+    <div class="container my-3">
+        <center>
+            <img src="https://ui-avatars.com/api/?name=<%- user.username %>" /> 
+            <h2 class="display-4">Welcome <%- user.username %>!</h2>
+            <h6 class="card-subtitle mb-2 text-muted">
+                Joined in <%- new Date(user.joinedOn).getFullYear() %>
+            </h6>
+        </center>
+
+        <hr />
+
+        <div class="col-lg-8 mx-auto my-2">
+            <h3>New Post</h3>
+            <hr />
+            <form action="/post/new" method="POST">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <% if(post) { %>
+                        <input type="text" class="form-control" name="title" value="<%- post.title %>" id="title" required>
+                    <% } else { %>   
+                        <input type="text" class="form-control" name="title" id="title" required>
+                    <% } %>
+                </div>
+                <div class="mb-3">
+                    <label for="company" class="form-label">Company</label>
+                    <% if(post) { %>
+                        <input type="text" class="form-control" name="company" value="<%- post.company %>" id="company" required>
+                    <% } else { %>
+                        <input type="text" class="form-control" name="company" id="company" required>
+                    <% } %>
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">Content</label>
+                    <% if(post) { %> 
+                        <textarea class="form-control" name="content" id="content" rows="10"><%- post.content %></textarea>
+                    <% } else { %>
+                        <textarea class="form-control" name="content" id="content" rows="10"></textarea>
+                    <% } %>
+                </div>
+                
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="anonymous" id="anonymous">
+                    <label class="form-check-label" for="anonymous">Post Anonymously ?</label>
+                </div>
+                <br />
+    
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <%- include('includes/footer') %>
